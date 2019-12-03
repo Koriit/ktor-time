@@ -1,0 +1,43 @@
+= Ktor Time Converters
+
+image:https://www.travis-ci.org/Koriit/ktor-time.svg?branch=master["Build Status", link="https://www.travis-ci.org/Koriit/ktor-time"]
+image:https://www.codefactor.io/repository/github/koriit/ktor-time/badge[CodeFactor,link=https://www.codefactor.io/repository/github/koriit/ktor-time]
+image:https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg[ktlint,link=https://ktlint.github.io/]
+
+image:https://api.bintray.com/packages/koriit/kotlin/ktor-time/images/download.svg[Download, link=https://bintray.com/koriit/kotlin/ktor-time/_latestVersion]
+image:https://img.shields.io/github/license/koriit/ktor-time[GitHub]
+
+Ktor data converters for JSR310 Java Time types.
+
+== Installation
+[source,kotlin]
+----
+install(DataConversion) {
+    convertTime()
+}
+----
+
+You can also install converters of specific types.
+[source,kotlin]
+----
+install(DataConversion) {
+    convertLocalDate()
+    convertLocalDateTime()
+    convertOffsetDateTime()
+}
+----
+
+== Serialization
+The actual serialization/deserialization is delegated to some specialized mapper.
+This library just offers a ktor data conversion wrapper over it.
+
+=== Jackson
+Jackson is used as default serializer. You can also pass your own `ObjectMapper` instance to all `convert*` functions.
+
+[WARNING]
+Jackson does not support JSR310 Java Time types by default. You need to register `JavaTimeModule`: +
+`ObjectMapper().registerModule(JavaTimeModule())`
+
+
+=== GSON
+TODO...
