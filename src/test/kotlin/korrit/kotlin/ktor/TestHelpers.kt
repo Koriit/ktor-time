@@ -5,7 +5,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 
-fun <T> List<T>.testCases(test: T.() -> Unit) {
+internal fun <T> List<T>.testCases(test: T.() -> Unit) {
     withIndex().forEach { (index, case) ->
         try {
             test(case)
@@ -15,7 +15,7 @@ fun <T> List<T>.testCases(test: T.() -> Unit) {
     }
 }
 
-fun <T> Map<String, T>.testCases(test: T.() -> Unit) {
+internal fun <T> Map<String, T>.testCases(test: T.() -> Unit) {
     forEach { (name, case) ->
         try {
             test(case)
@@ -25,7 +25,7 @@ fun <T> Map<String, T>.testCases(test: T.() -> Unit) {
     }
 }
 
-fun eventually(timeout: Long, test: () -> Unit) {
+internal fun eventually(timeout: Long, test: () -> Unit) {
     runBlocking {
         var lastError: java.lang.AssertionError? = null
         try {
