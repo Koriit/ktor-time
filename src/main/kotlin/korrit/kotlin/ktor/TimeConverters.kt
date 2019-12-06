@@ -1,13 +1,9 @@
-@file:Suppress("TooManyFunctions")
+@file:Suppress("TooManyFunctions") // there are just that many time types
 
 package korrit.kotlin.ktor
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import io.ktor.features.DataConversion
-import io.ktor.util.DataConversionException
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
@@ -169,25 +165,4 @@ fun DataConversion.Configuration.convertOffsetDateTime(jackson: ObjectMapper = j
  */
 fun DataConversion.Configuration.convertInstant(jackson: ObjectMapper = jackson()) {
     convert<Instant>(jackson)
-}
-
-private fun jackson() = JsonMapper.builder()
-    .addModule(JavaTimeModule())
-    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-    .build()
-
-private inline fun <reified T> DataConversion.Configuration.convert(jackson: ObjectMapper) {
-    convert<T> {
-        decode { values, _ ->
-            values.singleOrNull()?.let { jackson.readValue(it, T::class.java) }
-        }
-
-        encode { value ->
-            when (value) {
-                null -> listOf()
-                is T -> listOf(jackson.writeValueAsString(value))
-                else -> throw DataConversionException("Cannot convert $value as ${T::class.simpleName}")
-            }
-        }
-    }
 }
