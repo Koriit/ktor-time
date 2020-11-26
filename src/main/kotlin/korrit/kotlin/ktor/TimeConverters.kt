@@ -3,7 +3,9 @@
 package korrit.kotlin.ktor
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.features.DataConversion
+import io.ktor.util.*
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
@@ -24,7 +26,7 @@ import java.time.ZonedDateTime
  *
  * @param jackson object mapper that performs actual serialization and deserialization
  */
-fun DataConversion.Configuration.convertTime(jackson: ObjectMapper = jackson()) {
+fun DataConversion.Configuration.convertJSR310Time(jackson: ObjectMapper = jackson()) {
     convert<Instant>(jackson)
     convert<OffsetDateTime>(jackson)
     convert<ZonedDateTime>(jackson)
@@ -47,7 +49,21 @@ fun DataConversion.Configuration.convertTime(jackson: ObjectMapper = jackson()) 
  * @param jackson object mapper that performs actual serialization and deserialization
  */
 fun DataConversion.Configuration.convertZoneOffset(jackson: ObjectMapper = jackson()) {
-    convert<ZoneOffset>(jackson)
+    convert<ZoneOffset> {
+            decode { values, _ ->
+                values.singleOrNull()?.let { jackson.readValue("\"$it\"") }
+            }
+
+            encode { value ->
+                when (value) {
+                    null -> listOf()
+                    is ZoneOffset -> {
+                        listOf(jackson.writeValueAsString(value).removeSurrounding("\"")) // we want string-encoding, not json-encoding
+                    }
+                    else -> throw DataConversionException("Cannot convert $value : ${value.javaClass.simpleName} is not ${ZoneOffset::class.simpleName}")
+                }
+            }
+        }
 }
 
 /**

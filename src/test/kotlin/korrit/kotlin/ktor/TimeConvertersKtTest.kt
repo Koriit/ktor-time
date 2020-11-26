@@ -2,6 +2,9 @@ package korrit.kotlin.ktor
 
 import io.ktor.application.ApplicationCallPipeline
 import io.ktor.features.DataConversion
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -9,16 +12,13 @@ import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.chrono.ChronoZonedDateTime
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Test
 
 internal class TimeConvertersKtTest {
 
     @Test
     fun `should convert date and time`() {
         val converter = DataConversion.install(ApplicationCallPipeline()) {
-            convertTime()
+            convertJSR310Time()
         }
 
         data class Case(
