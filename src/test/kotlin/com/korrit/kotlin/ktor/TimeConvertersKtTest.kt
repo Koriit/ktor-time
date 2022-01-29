@@ -1,4 +1,4 @@
-package korrit.kotlin.ktor
+package com.korrit.kotlin.ktor
 
 import io.ktor.application.ApplicationCallPipeline
 import io.ktor.features.DataConversion

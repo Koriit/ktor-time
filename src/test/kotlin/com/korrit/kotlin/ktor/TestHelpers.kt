@@ -1,4 +1,4 @@
-package korrit.kotlin.ktor
+package com.korrit.kotlin.ktor
 
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
