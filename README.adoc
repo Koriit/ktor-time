@@ -1,10 +1,10 @@
 = Ktor Time Converters
 
-image:https://www.travis-ci.org/Koriit/ktor-time.svg?branch=master["Build Status", link="https://www.travis-ci.org/Koriit/ktor-time"]
+image:https://github.com/Koriit/ktor-time/actions/workflows/build.yaml/badge.svg[Build, link="https://github.com/Koriit/ktor-time/actions/workflows/build.yaml"]
 image:https://www.codefactor.io/repository/github/koriit/ktor-time/badge[CodeFactor,link=https://www.codefactor.io/repository/github/koriit/ktor-time]
 image:https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg[ktlint,link=https://ktlint.github.io/]
 
-image:https://api.bintray.com/packages/koriit/kotlin/ktor-time/images/download.svg[Download, link=https://bintray.com/koriit/kotlin/ktor-time/_latestVersion]
+image:https://img.shields.io/maven-central/v/com.koriit.kotlin/ktor-time.svg?label=Maven%20Central[Maven Central, link="https://search.maven.org/search?q=g:%22com.koriit.kotlin%22%20AND%20a:%22ktor-time%22"]
 image:https://img.shields.io/github/license/koriit/ktor-time[GitHub]
 
 Ktor data converters for JSR310 Java Time types.
